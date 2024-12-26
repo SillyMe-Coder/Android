@@ -3,13 +3,12 @@ package com.example.helloworld
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,7 +23,6 @@ import com.example.helloworld.ui.theme.HelloWorldTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             HelloWorldTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -40,6 +38,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
+    var greeting by remember { mutableStateOf("Hello $name!") }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -59,17 +59,21 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "Hello $name!",
+            text = greeting,
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
             color = Color(0xFF6200EE)
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "Welcome to the beautiful Hello World app.",
+            text = "Welcome to the beautiful app.",
             fontSize = 18.sp,
             color = Color(0xFF333333)
         )
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(onClick = { greeting = "Hello, User!" }) {
+            Text(text = "Click Me")
+        }
     }
 }
 
